@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:quiz_app/answers.dart';
+
+const Color primaryColor = Colors.pinkAccent;
+const Color secondaryColor = Colors.blueGrey;
 
 void main() => runApp(QuizApp());
 
@@ -16,37 +20,81 @@ class QuizApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final List<String> sorular = [
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final List<String> questions = [
+    "Birinci Soru",
+    "İkinci Soru",
+    "Üçüncü Soru",
+    "Birinci Soru",
+    "İkinci Soru",
+    "Üçüncü Soru",
+    "Birinci Soru",
+    "İkinci Soru",
+    "Üçüncü Soru",
     "Birinci Soru",
     "İkinci Soru",
     "Üçüncü Soru",
   ];
-  final List<String> cevaplar = ["dsa", "das", "dfas", "dsa"];
-  int index = 0;
+
+  final List<List> answers = [
+    ["dsa", "das", "dfas", "dsa"],
+    ["elma", "armut,", "çilek", "muz"],
+    ["dsa", "das", "dfas", "dsa"],
+    ["elma", "armut,", "çilek", "muz"],
+    ["dsa", "das", "dfas", "dsa"],
+    ["elma", "armut,", "çilek", "muz"],
+  ];
+
+  int qIndex = 0;
+
+  void answerQuestion() {
+    setState(() {
+      qIndex++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primaryColor,
         title: Text("Quiz App"),
       ),
-      body: Column(
-        children: <Widget>[
-          Card(
-            child: Text(
-              sorular[index],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) => ElevatedButton(
-                onPressed: () {},
-                child: Text(cevaplar[index]),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                color: Colors.deepOrangeAccent,
+                child: Center(
+                  child: Text(
+                    questions[qIndex],
+                  ),
+                ),
               ),
-              itemCount: 4,
             ),
-          )
-        ],
+            Card(
+              elevation: 3,
+              child: Column(
+                children: [
+                  Answer(answers[qIndex][0], answerQuestion),
+                  Answer(answers[qIndex][1], answerQuestion),
+                  Answer(answers[qIndex][2], answerQuestion),
+                  Answer(answers[qIndex][3], answerQuestion),
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 2,
+              child: Container(),
+            )
+          ],
+        ),
       ),
     );
   }
